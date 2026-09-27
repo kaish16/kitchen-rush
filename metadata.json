@@ -1,0 +1,8 @@
+{
+  "name": "Kitchen Rush Arcade Game",
+  "description": "Fast-paced restaurant kitchen arcade game where players assemble dishes against the clock.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

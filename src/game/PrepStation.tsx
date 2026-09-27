@@ -48,7 +48,7 @@ function CookGame({ step, onProgress, onBurn, burnLevel }: { step: PrepStep; onP
   const [cooking, setCooking] = useState(false);
   const [progress, setProgress] = useState(0);
   const [flipWindow, setFlipWindow] = useState(false);
-  const [flipTimer, setFlipTimer] = useState(0);
+  const [, setFlipTimer] = useState(0);
   const [flips, setFlips] = useState(0);
   const intervalRef = useRef<number | null>(null);
 
@@ -63,6 +63,8 @@ function CookGame({ step, onProgress, onBurn, burnLevel }: { step: PrepStep; onP
         const inRange = temp >= idealMin && temp <= idealMax;
         if (inRange) {
           return Math.min(target, p + 0.15);
+        } else if (temp > idealMax) {
+          onBurn();
         }
         return p;
       });
@@ -80,7 +82,7 @@ function CookGame({ step, onProgress, onBurn, burnLevel }: { step: PrepStep; onP
       });
     }, 100);
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [cooking, temp]);
+  }, [cooking, temp, target, onBurn]);
 
   useEffect(() => {
     if (progress >= target) {
@@ -145,7 +147,6 @@ function CookGame({ step, onProgress, onBurn, burnLevel }: { step: PrepStep; onP
 // ── SEASON: timing-based click ───────────────────────────────
 function SeasonGame({ step, onProgress }: { step: PrepStep; onProgress: (n: number, b: boolean) => void }) {
   const [position, setPosition] = useState(0);
-  const [dir, setDir] = useState(1);
   const [seasons, setSeasons] = useState(0);
   const [feedback, setFeedback] = useState<'perfect' | 'ok' | 'miss' | null>(null);
   const target = step.target;
@@ -159,7 +160,6 @@ function SeasonGame({ step, onProgress }: { step: PrepStep; onProgress: (n: numb
       if (pos >= 100) { pos = 100; d = -1; }
       if (pos <= 0) { pos = 0; d = 1; }
       setPosition(pos);
-      setDir(d);
       rafRef.current = requestAnimationFrame(animate);
     };
     rafRef.current = requestAnimationFrame(animate);

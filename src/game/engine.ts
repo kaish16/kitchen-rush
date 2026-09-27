@@ -163,7 +163,7 @@ function reducer(state: GameState, action: Action): GameState {
     case 'TICK': {
       if (state.phase !== 'playing' || state.gameOver) return state;
       const dt = action.dt;
-      let timeLeft = state.timeLeft - dt;
+      const timeLeft = state.timeLeft - dt;
       let dinnerRush = state.dinnerRush;
       if (timeLeft <= DINNER_RUSH_START && !dinnerRush) dinnerRush = true;
 

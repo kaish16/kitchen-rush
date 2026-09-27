@@ -9,7 +9,6 @@ interface OrderTicketProps {
 export function OrderTicket({ order, selected, onClick }: OrderTicketProps) {
   const patiencePct = Math.max(0, (order.patienceLeft / order.recipe.patience) * 100);
   const patienceColor = patiencePct > 50 ? '#2ecc71' : patiencePct > 25 ? '#f1c40f' : '#e74c3c';
-  const stepPct = (order.stepIndex / order.recipe.steps.length) * 100;
 
   const specialBadge = order.special === 'vip' ? '⭐ VIP' : order.special === 'critic' ? '📝 CRITIC' : order.special === 'double' ? '2x DOUBLE' : null;
 
